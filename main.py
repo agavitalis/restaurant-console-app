@@ -1,4 +1,5 @@
 import json
+import yaml
 import os
 
 class FormComponent:
@@ -11,6 +12,9 @@ class FormComponent:
             if file_extension.lower() == ".json":
                 with open(file_path, 'r') as file:
                     self.forms = json.load(file)
+            elif file_extension.lower() == ".yaml":
+                with open(file_path, 'r') as file:
+                    self.forms = yaml.safe_load(file)
             else:
                 raise ValueError("Unsupported file format. Only JSON and YAML are supported.")
             print("Form imported successfully.")
@@ -18,6 +22,8 @@ class FormComponent:
             print("Error: File not found.")
         except json.JSONDecodeError:
             print("Error: Invalid JSON format.")
+        except yaml.YAMLError:
+            print("Error: Invalid YAML format.")
         except ValueError as e:
             print(e)
 
